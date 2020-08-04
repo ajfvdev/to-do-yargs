@@ -1,0 +1,13 @@
+{
+  "name": "to-do",
+  "version": "1.0.0",
+  "author": "Alfredo Flores",
+  "description": "Learning deep node.js to expert",
+  "scripts": {
+    "start": "node src/index"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "yargs": "^15.4.1"
+  }
+}
