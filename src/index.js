@@ -5,50 +5,50 @@ const db = require("./services/todo.js");
 let comando = argv._[0];
 let value = false;
 
-switch(comando) {
+switch (comando) {
 
-case "crear":
-value = db.crear(argv.descripcion);
-if(value != null){
-console.log(`se creo exitosamente la tarea.`.green);
-}else{
-console.log(`no se pudo crear la tarea.`.red);
-}
+    case "crear":
+        value = db.crear(argv.descripcion);
+        if (value != null) {
+            console.log(`se creo exitosamente la tarea.`.green);
+        } else {
+            console.log(`no se pudo crear la tarea.`.red);
+        }
 
-break;
+        break;
 
-case "actualizar":
+    case "actualizar":
 
-value = db.actualizar(argv.id, argv.completado);
+        value = db.actualizar(argv.id, argv.completado);
 
-if(value === null){
-console.log(`No se pudo actualizar, por que no existe la tarea con ID: ${ argv.id } `.red);
-}else{
-console.log(`La tarea: ${ value["descripcion"] } fue actualizada exitosamente!`.green);
-}
+        if (value === null) {
+            console.log(`No se pudo actualizar, por que no existe la tarea con ID: ${argv.id} `.red);
+        } else {
+            console.log(`La tarea: ${value["descripcion"]} fue actualizada exitosamente!`.green);
+        }
 
 
-break;
+        break;
 
-case "mostrar":
+    case "mostrar":
 
-db.mostrar(argv.id);
+        db.mostrar(argv.id);
 
-break;
+        break;
 
-case "borrar":
+    case "borrar":
 
-let value = db.borrar(argv.id);
+        let value = db.borrar(argv.id);
 
-if(value)
-console.log("La tarea fue eliminada exitosamente..".green);
-else
-console.log(`La tarea con el ID ${ argv.id } no existe`.red);
+        if (value)
+            console.log("La tarea fue eliminada exitosamente..".green);
+        else
+            console.log(`La tarea con el ID ${argv.id} no existe`.red);
 
-break;
+        break;
 
-default:
-console.log("comando no reconocido.");
-break;
+    default:
+        console.log("comando no reconocido.");
+        break;
 
 }

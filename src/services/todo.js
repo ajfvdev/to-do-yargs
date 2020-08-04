@@ -8,137 +8,137 @@ let dataList = [];
 
 const cargarDB = () => {
 
-try { 
+    try {
 
-dataList = require("./../db/datos.json");
+        dataList = require("./../db/datos.json");
 
-}catch(error){
-dataList = [];
-}
+    } catch (error) {
+        dataList = [];
+    }
 
 }
 
 const guardarDB = () => {
 
-let dataJson = JSON.stringify(dataList);
+    let dataJson = JSON.stringify(dataList);
 
-fs.writeFile(dbRuta, dataJson, (error) => {
+    fs.writeFile(dbRuta, dataJson, (error) => {
 
-if(error) throw new Error("No se pudo guardar..", error);
+        if (error) throw new Error("No se pudo guardar..", error);
 
-});
+    });
 
 }
 
-const mostrarId = async (id) => {
+const mostrarId = async(id) => {
 
-let data = []
+    let data = []
 
-dataList.forEach(value => {
-if(value["id"] == id)
-data[0] = value;
-});
+    dataList.forEach(value => {
+        if (value["id"] == id)
+            data[0] = value;
+    });
 
-return data;
+    return data;
 
 }
 
 const crear = (descripcion) => {
 
-cargarDB();
+    cargarDB();
 
-let value = {
-id: (dataList.length + 1),
-descripcion: descripcion,
-completado: false
-};
+    let value = {
+        id: (dataList.length + 1),
+        descripcion: descripcion,
+        completado: false
+    };
 
-dataList.push(value);
+    dataList.push(value);
 
-guardarDB();
+    guardarDB();
 
-return value;
+    return value;
 
 }
 
-const mostrar = async (id) => {
+const mostrar = async(id) => {
 
-cargarDB();
+    cargarDB();
 
-let values = [];
+    let values = [];
 
-if(id == 0)
-values = dataList;
-else
-values = await mostrarId(id);
+    if (id == 0)
+        values = dataList;
+    else
+        values = await mostrarId(id);
 
-values.forEach(value => {
-console.log("=========".green + " TAREA ".yellow + "==========".green);
-console.log(`ID: ${ value["id"] }`.gray);
-console.log(value["descripcion"]);
-console.log(`Estado: ${ value["completado"] ? "realizada".green : "pendiente".red } `);
-console.log("========================== \n".green);
-});
+    values.forEach(value => {
+        console.log("=========".green + " TAREA ".yellow + "==========".green);
+        console.log(`ID: ${value["id"]}`.gray);
+        console.log(value["descripcion"]);
+        console.log(`Estado: ${value["completado"] ? "realizada".green : "pendiente".red} `);
+        console.log("========================== \n".green);
+    });
 
 }
 
 const actualizar = (id, estado) => {
 
-cargarDB();
+    cargarDB();
 
-let actualizado = null;
+    let actualizado = null;
 
-dataList.forEach(value => {
+    dataList.forEach(value => {
 
-if(value["id"] == id){
+        if (value["id"] == id) {
 
-value["completado"] = estado === "false" ? false : true;
+            value["completado"] = estado === "false" ? false : true;
 
-actualizado = {
-id: id,
-descripcion: value["descripcion"],
-completado: estado
-};
+            actualizado = {
+                id: id,
+                descripcion: value["descripcion"],
+                completado: estado
+            };
 
-}
+        }
 
-});
+    });
 
-guardarDB();
+    guardarDB();
 
-return actualizado;
+    return actualizado;
 
 }
 
 
 const borrar = (id) => {
 
-cargarDB();
+    cargarDB();
 
-let searching = true;
+    let searching = true;
 
-for(let i = 0; i < dataList.length && searching; i++){
+    for (let i = 0; i < dataList.length && searching; i++) {
 
-if(dataList[i]["id"] == id){
-dataList.splice(i, 1);
-searching = false;
-}
+        if (dataList[i]["id"] == id) {
+            dataList.splice(i, 1);
+            searching = false;
+        }
 
-}
+    }
 
-guardarDB();
+    guardarDB();
 
-if(searching)
-return false;
-else
-return true;
+    if (searching)
+        return false;
+    else
+        return true;
 
 
 }
 
 module.exports = {
-crear,
-mostrar,
-actualizar,
-borrar
+    crear,
+    mostrar,
+    actualizar,
+    borrar
 }
